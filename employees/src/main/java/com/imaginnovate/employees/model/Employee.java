@@ -5,7 +5,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,18 +24,19 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	@SuppressWarnings("deprecation")
-	@NotBlank(message = "Name is mandatory")
+	@NotNull(message = "First Name Required")
+	@Size(min = 2, message = "First Name must have at least 2 characters")
 	private String firstName;
-	@NotBlank(message = "Email is mandatory")
+	@NotBlank(message = "First Name Required")
 	private String lastName;
-	@NotBlank(message = "Email is mandatory")
+	@Email
+	@NotBlank(message = "Email Required")
 	private String emailId;
-	@NotBlank(message = "Email is mandatory")
+	@NotEmpty(message = "Phone Required")
 	private int [] phone;
-	@NotBlank(message = "Email is mandatory")
+	@NotBlank(message = "Salary Required")
 	private double salary;
-	@NotBlank(message = "Email is mandatory")
+	@NotBlank(message = "DOJ Required")
 	private LocalDate   doj;
 
 	public Employee(){
