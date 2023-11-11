@@ -1,10 +1,10 @@
 package com.imaginnovate.employees.controller;
 
-import java.util.List;
 
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,34 +12,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.imaginnovate.employees.model.Employee;
-import com.imaginnovate.employees.model.EmployeeTax;
+import com.imaginnovate.employees.model.EmployeeDTO;
+import com.imaginnovate.employees.model.EmployeeTaxDTO;
 import com.imaginnovate.employees.service.EmployeeService;
 
+import jakarta.validation.Valid;
 
 
-@RestController
 @RequestMapping("/api/emp/")
+@RestController
 public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
 	
-	// get all employees
-	@GetMapping("/employees")
-	public List<Employee> getAllEmployees(){
-		return employeeService.allEmployees();
-	}
-	
 	@PostMapping("/employees")
-	public Employee createEmployee(@Valid @RequestBody Employee employee) {
-		return employeeService.createEmployee(employee);
+	public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody @Valid EmployeeDTO employee) {
+		return new ResponseEntity<EmployeeDTO>( employeeService.createEmployee(employee), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/emptax/{employeeId}")
-	public EmployeeTax getEmployeeTax(@PathVariable long employeeId) {
+	public EmployeeTaxDTO getEmployeeTax(@PathVariable long employeeId) {
 		return employeeService.getEmployeeTax(employeeId);
-		
-		
 	}
 }
