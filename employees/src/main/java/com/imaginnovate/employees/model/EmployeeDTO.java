@@ -6,9 +6,13 @@ import java.util.List;
 
 import com.imaginnovate.employees.entity.Employee;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
@@ -24,6 +28,7 @@ import lombok.NoArgsConstructor;
 public class EmployeeDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	@Schema(accessMode = AccessMode.READ_ONLY)
 	private long id;
 	@NotBlank(message = "Invalid Name: Empty First Name")
     @NotNull(message = "Invalid Name: First Name is NULL")
@@ -36,8 +41,12 @@ public class EmployeeDTO implements Serializable{
 	@Email(message = "Invalid email")
 	@NotBlank(message = "Email Required")
 	private String emailId;
+    @NotEmpty(message = "Invalid Phone: Empty Phone")
+    @NotNull(message = "Invalid Phone: Salary is Phone")
     @Size(min = 1, max = 2, message = "Invalid Phone : No Phone Numbers ")
 	private List<Long> phone;
+    @Digits(integer=6,fraction=2)
+    @NotNull(message = "Invalid Phone: Salary is Phone")
 	@Min(value = 1, message = "Invalid Salary: Equals to zero or Less than zero")
 	private double salary;
 	@NotNull(message = "The date of join is required.")
